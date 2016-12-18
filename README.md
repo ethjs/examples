@@ -1,7 +1,5 @@
 ## ethjs-examples
 
-<br />
-
 A set of example dApps and apps using `ethjs`.
 
 ## Install
@@ -15,12 +13,6 @@ cd examples
 
 Open any of the `.html` files in `Chrome` or `Firefox`. Everything runs out of the box.
 
-## About
-
-This is a small set of dApps and apps using `ethjs`. Each example is meant to demonstrate correct usage of `ethjs` modules, namely, the [`ethjs`](http://github.com/ethjs/ethjs) module.
-
-Many of these examples use `ethereumjs-testrpc` to simulate an Ethereum node running in the browser. This is meant to get you up and running with Ethereum, so configuration is kept to a minimum. Once you feel ready to go to an actual node or client, please use any one of the available nodes or clients listed below.
-
 ## Available Examples
 
   - [Account dApp](./accounts.html) - See your Ethereum accounts and balances
@@ -29,6 +21,12 @@ Many of these examples use `ethereumjs-testrpc` to simulate an Ethereum node run
   - [First Contract dApp](./first-contract.html) - Set and Get from a SimpleStore contract
   - [Simple Auction dApp](./simple-auction.html) - A simple Ethereum auction from the Solidity examples
   - [Token Wallet](./token-wallet.html) - Send and receive EC20 standard tokens
+
+## About
+
+This is a small set of dApps and apps using `ethjs`. Each example is meant to demonstrate correct usage of `ethjs` modules, namely, the [`ethjs`](http://github.com/ethjs/ethjs) module.
+
+Many of these examples use `ethereumjs-testrpc` to simulate an Ethereum node running in the browser. This is meant to get you up and running with Ethereum, so configuration is kept to a minimum. Once you feel ready to go to an actual node or client, please use any one of the available nodes or clients listed below.
 
 ## Libraries Used
 
