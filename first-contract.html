@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  </head>
+  <body class="container" style="padding-top: 3%;">
+    <h2><a href="http://github.com/ethjs" target="_blank">ethjs</a></h2>
+    <h4>SimpleStore Contract</h4>
+
+    <hr />
+
+    <div class="row">
+      <div class="column column-60">
+        <label>Set Value</label>
+        <input id="valueAmount" type="number" placeholder="i.e. 4500" />
+
+        <button id="setValue">Set Value</button>
+        <button id="getValue">Get Value</button>
+
+        <br /><br />
+
+        <div id="response" style="padding: 20px; border: 1px solid #9b4dca; word-wrap: break-word">
+          Deploying your contract...
+        </div>
+      </div>
+      <div class="column column-40">
+        <label>Bytecode</label>
+        <input id="bytecode" type="text" value="" />
+
+        <label>ABI</label>
+        <textarea id="abi"></textarea>
+      </div>
+    </div>
+
+    <br /><br />
+
+    <label>Solidity Code</label>
+
+    <pre><code>
+contract SimpleStore {
+  function set(uint _value) {
+    value = _value;
+  }
+
+  function get() constant returns (uint) {
+    return value;
+  }
+
+  uint value;
+}
+    </code></pre>
+
+    <script type="text/javascript" src="ethereumjs-testrpc.js"></script>
+    <script type="text/javascript" src="ethjs.js"></script>
+    <script type="text/javascript">
+      var eth = new Eth(TestRPC.provider());
+      var el = function(id){ return document.querySelector(id); };
+
+      /*
+      // uncomment to enable MetaMask support:
+      if (typeof window.web3 !== 'undefined' && typeof window.web3.currentProvider !== 'undefined') {
+        eth.setProvider(window.web3.currentProvider);
+      } else {
+        eth.setProvider(provider); // set to TestRPC if not available
+      }
+      */
+
+      eth.accounts().then(function(accounts) {
+        var SimpleStoreBytecode = '606060405234610000575b6090806100176000396000f360606040526000357c01000000000000000000000000000000000000000000000000000000009004806360fe47b11460405780636d4ce63c14605a575b6000565b3460005760586004808035906020019091905050607a565b005b3460005760646085565b6040518082815260200191505060405180910390f35b806000819055505b50565b600060005490505b9056';
+        var SimpleStoreABI = [{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"set","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"}];
+        var SimpleStore = eth.contract(SimpleStoreABI, SimpleStoreBytecode, { from: accounts[0], gas: 300000 });
+        var simpleStoreInstance;
+
+        el('#bytecode').value = SimpleStoreBytecode;
+        el('#abi').value = JSON.stringify(SimpleStoreABI);
+
+        SimpleStore.new({}).then(function(txHash){
+          var checkTransaction = setInterval(function(){
+            eth.getTransactionReceipt(txHash).then(function(receipt){
+              if (receipt) {
+                clearInterval(checkTransaction);
+                simpleStoreInstance = SimpleStore.at(receipt.contractAddress);
+
+                el('#response').innerHTML = 'Contract deployed to address: ' + String(receipt.contractAddress);
+                el('#setValue').addEventListener('click', function(){
+                  simpleStoreInstance.set(el('#valueAmount').value)
+                  .then(function(setTxHash){
+                    el('#response').innerHTML = 'Setting value... Your transaction hash is: ' + String(setTxHash);
+                  });
+                });
+
+                el('#getValue').addEventListener('click', function(){
+                  simpleStoreInstance.get().then(function(valueStored){
+                    el('#response').innerHTML = 'The value stored in the contract is: ' + valueStored[0].toString(10);
+                  });
+                });
+              }
+            });
+          }, 400);
+        })
+        .catch(function(error){
+          el('#response').innerHTML = 'There was an error: ' + String(error);
+        });
+      });
+    </script>
+  </body>
+</html>

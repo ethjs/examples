@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  </head>
+  <body class="container" style="padding-top: 3%;">
+    <h2><a href="http://github.com/ethjs" target="_blank">ethjs</a></h2>
+    <h4>Your Accounts</h4>
+
+    <hr />
+
+    <table>
+      <thead> <tr> <th>Address</th> <th>Balance</th> </tr> </thead>
+      <tbody id="accounts"> <tr><td colspan="2">Loading your accounts...</td></tr> </tbody>
+    </table>
+
+    <script type="text/javascript" src="ethereumjs-testrpc.js"></script>
+    <script type="text/javascript" src="ethjs.js"></script>
+    <script type="text/javascript">
+      var eth = new Eth(TestRPC.provider());
+      var el = function(id){ return document.querySelector(id); };
+
+      /*
+      // uncomment to enable MetaMask support:
+      if (typeof window.web3 !== 'undefined' && typeof window.web3.currentProvider !== 'undefined') {
+        eth.setProvider(window.web3.currentProvider);
+      } else {
+        eth.setProvider(provider); // set to TestRPC if not available
+      }
+      */
+
+      eth.accounts(function(accountsError, accounts) {
+        if (accountsError) {
+          el('#accounts').innerHTML = 'Hmm.. looks like there was an error: '
+            + String(accountsError);
+        }
+
+        el('#accounts').innerHTML = '';
+
+        accounts.forEach(function(account){
+          el('#accounts').innerHTML += '<tr><td>'
+            + account + '</td><td id="accountBalance_'
+            + account + '"></td></tr>';
+
+          eth.getBalance(account, function(balanceError, balance){
+            el('#accountBalance_' + account).innerHTML += Eth.fromWei(balance, 'ether')
+              + ' ether';
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
