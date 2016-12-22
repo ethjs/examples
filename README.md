@@ -9,6 +9,10 @@ git clone http://github.com/ethjs/examples
 cd examples
 ```
 
+## Hosted
+
+[ethjs-examples.surge.sh](http://ethjs-examples.surge.sh)
+
 ## Usage
 
 Open any of the `.html` files in `Chrome` or `Firefox`. Everything runs out of the box.
