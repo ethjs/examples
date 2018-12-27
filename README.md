@@ -21,10 +21,10 @@ Open any of the `.html` files in `Chrome` or `Firefox`. Everything runs out of t
 
   - [Account dApp](http://ethjs-examples.surge.sh/accounts.html) - [code](./accounts.html) -- See your Ethereum accounts and balances
   - [Ballot dApp](http://ethjs-examples.surge.sh/ballot.html) - [code](./ballot.html) -- The Ballot.sol dApp from the Solidity Read the docs
-  - [Blockchain Explorer](http://ethjs-examples.surge.sh/blockchain-explorer.html) -  [code](./blockchain-explorer.html) Lookup blocks and transactions on the Etheruem mainnet, via Infura.io
-  - [First Contract dApp](http://ethjs-examples.surge.sh/first-contract.html) -  [code](./first-contract.html) - Set and Get from a SimpleStore contract
+  - [Blockchain Explorer](http://ethjs-examples.surge.sh/blockchain-explorer.html) - [code](./blockchain-explorer.html) -- Lookup blocks and transactions on the Etheruem mainnet, via Infura.io
+  - [First Contract dApp](http://ethjs-examples.surge.sh/first-contract.html) -  [code](./first-contract.html) -- Set and Get from a SimpleStore contract
   - [Simple Auction dApp](http://ethjs-examples.surge.sh/simple-auction.html) -  [code](./simple-auction.html)  -- A simple Ethereum auction from the Solidity examples
-  - [Token Wallet](http://ethjs-examples.surge.sh/token-wallet.html) -  [code](./token-wallet.html) - Send and receive EC20 standard tokens
+  - [Token Wallet](http://ethjs-examples.surge.sh/token-wallet.html) -  [code](./token-wallet.html) -- Send and receive EC20 standard tokens
   - [TicTacToe](http://ethjs-examples.surge.sh/tictactoe.html) -  [code](./tictactoe.html) -- A tic tac toe game, the winning player gets the reward!
 
 ## About
