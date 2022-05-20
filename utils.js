@@ -59,3 +59,54 @@ async function checkMinimalBalance() {
       el("#lowBalance").style.display = "block";
     }
 }
+
+async function checkNetwork() {
+    try{
+  
+      // Access web3
+      const web3 = new Web3(window.ethereum);
+  
+      // Get account
+      let account = await ethereum.request({ method: "eth_accounts" });
+  
+      // Get the bytecode of the address or smart contract
+      let bytecode = await web3.eth.getCode(account[0]);
+  
+      // If address is EOA, likely a 3rd party extension is used
+      if (bytecode === '0x') {
+  
+        // Show 3rd party extension notification
+        el("#extension").style.display = "block";
+  
+        // Get its network ID
+        const networkID = await web3.eth.net.getId();
+  
+        // Check if its connected to the wrong network
+        if (networkID !== 22) {
+          
+          // Show wrong network notification
+          el("#network").style.display = "block";
+          return false;
+  
+        }
+        
+        /**
+         * 3rd party extension is connected to the right network.
+         * Check if balance on network is enough to send transactions
+         */
+        await checkMinimalBalance();
+        return true;
+      }
+  
+      // Likely installed the UP extension
+      return true;
+    }
+    catch(e){
+  
+      /**
+       *  Extension not installed or locked:
+       *  connectWeb3() needs to be run before
+       */ 
+      return false;
+    }
+}
