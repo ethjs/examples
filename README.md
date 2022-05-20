@@ -5,14 +5,14 @@ A set of example dApps and apps using `web3.js` to showcase the usage of Univers
 ## Install and run locally
 
 ```
-git clone https://github.com/lukso-network/example-dapps-ethjs
-cd example-dapps-ethjs
+git clone https://github.com/lukso-network/example-dapps
+cd example-dapps
 python3 -m http.server --cgi 8080
 ```
 
 ## Hosted
 
-[LUKSO Sample dApps](WIP)
+[LUKSO Sample dApps](http://example-dapps.lukso.tech/)
 
 ## Usage
 
@@ -20,14 +20,14 @@ Open any of the `.html` files in `Chrome` or `Firefox`. Everything runs out of t
 
 ## Available Examples
 
-- [Account dApp](WIP) - [code](./accounts.html) -- See your Ethereum accounts and balances
-- [Simple Storage dApp](WIP) - [code](./simple-storage.html) -- Set and Get from a SimpleStore contract
+- [Account dApp](http://example-dapps.lukso.tech/accounts-dapp) - [code](./accounts.html) -- See your Ethereum accounts and balances
+- [Simple Storage dApp](http://example-dapps.lukso.tech/simple-storage-dapp) - [code](./simple-storage.html) -- Set and Get from a SimpleStore contract
 
 ## About
 
 This is a small set of dApps using `web3.js`.
 
-All listed examples on the hosted [landingpage](WIP) also feature other repositories that connect to the LUKSO L14 testnetwork. This is meant to get you up and running with the [Universal Profile Extension](https://docs.lukso.tech/guides/universal-profile/browser-extension/install-browser-extension) but also works using the [MetaMask](https://metamask.io/) by having less convenience.
+All listed examples on the hosted [landingpage](http://example-dapps.lukso.tech/accounts-dapp) also feature other repositories that connect to the LUKSO L14 testnetwork. This is meant to get you up and running with the [Universal Profile Extension](https://docs.lukso.tech/guides/universal-profile/browser-extension/install-browser-extension) but also works using the [MetaMask](https://metamask.io/) by having less convenience.
 
 ## Libraries
 
