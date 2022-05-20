@@ -67,9 +67,6 @@
     href="https://github.com/lukso-network/example-dapps-ethjs/blob/master/simple-storage.html"
     target="_blank">lukso-network/example-dapps-ethjs/simple-storage.html</a>
 
-  <script type="text/javascript" src="ethereumjs-testrpc.js"></script>
-  <script type="text/javascript" src="ethjs.js"></script>
-
   <!-- Connect Extension & Check Network & Check Balance & Change Network-->
   <script src="./utils.js"></script>
 
@@ -78,55 +75,62 @@
 
   <!-- Main Function -->
   <script type="text/javascript">
-    var eth = new Eth(TestRPC.provider());
-    var el = function (id) { return document.querySelector(id); };
+    // ABI of the deployed contract
+    const SimpleStoreABI = [{ "inputs": [], "name": "get", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_value", "type": "uint256" }], "name": "set", "outputs": [], "stateMutability": "nonpayable", "type": "function" }];
 
-    /*
-    // uncomment to enable MetaMask support:
-    if (typeof window.web3 !== 'undefined' && typeof window.web3.currentProvider !== 'undefined') {
-      eth.setProvider(window.web3.currentProvider);
-    } else {
-      eth.setProvider(provider); // set to TestRPC if not available
-    }
-    */
+    // Showing the ABI in the input field
+    el('#abi').value = JSON.stringify(SimpleStoreABI, null, 2);
 
-    eth.accounts().then(function (accounts) {
-      var SimpleStoreBytecode = '606060405234610000575b6090806100176000396000f360606040526000357c01000000000000000000000000000000000000000000000000000000009004806360fe47b11460405780636d4ce63c14605a575b6000565b3460005760586004808035906020019091905050607a565b005b3460005760646085565b6040518082815260200191505060405180910390f35b806000819055505b50565b600060005490505b9056';
-      var SimpleStoreABI = [{ "constant": false, "inputs": [{ "name": "_value", "type": "uint256" }], "name": "set", "outputs": [], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "get", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "type": "function" }];
-      var SimpleStore = eth.contract(SimpleStoreABI, SimpleStoreBytecode, { from: accounts[0], gas: 300000 });
-      var simpleStoreInstance;
+    // Simple Storage Application
+    async function app() {
 
-      el('#bytecode').value = SimpleStoreBytecode;
-      el('#abi').value = JSON.stringify(SimpleStoreABI);
+      /**
+       * Only start the application if: an extension is installed and right network connected 
+       * Functions can be found in utils.js and return bool
+       */
+      if (await connectWeb3() && await checkNetwork()) {
 
-      SimpleStore.new({}).then(function (txHash) {
-        var checkTransaction = setInterval(function () {
-          eth.getTransactionReceipt(txHash).then(function (receipt) {
-            if (receipt) {
-              clearInterval(checkTransaction);
-              simpleStoreInstance = SimpleStore.at(receipt.contractAddress);
+        // Set up web3 library and get account
+        const web3 = new Web3(window.ethereum);
+        let account = await ethereum.request({ method: "eth_accounts" });
 
-              el('#response').innerHTML = 'Contract deployed to address: ' + String(receipt.contractAddress);
-              el('#setValue').addEventListener('click', function () {
-                simpleStoreInstance.set(el('#valueAmount').value)
-                  .then(function (setTxHash) {
-                    el('#response').innerHTML = 'Setting value... Your transaction hash is: ' + String(setTxHash);
-                  });
-              });
+        // Deployed smart contract on L14
+        let simpleStoreInstance = new web3.eth.Contract(SimpleStoreABI, '0xaA61d96cB849246Ebf3cf148e2f42F3FF216EA4D');
 
-              el('#getValue').addEventListener('click', function () {
-                simpleStoreInstance.get().then(function (valueStored) {
-                  el('#response').innerHTML = 'The value stored in the contract is: ' + valueStored[0].toString(10);
-                });
-              });
-            }
-          });
-        }, 400);
-      })
-        .catch(function (error) {
-          el('#response').innerHTML = 'There was an error: ' + String(error);
+        // Add set button functionality
+        el('#setValue').addEventListener('click', function () {
+          let input = el('#valueAmount').value;
+
+          // Check if user input is a valid
+
+          // Update response and error element
+          el('#response').innerHTML = "Trying to set value...";
+
+          /**
+           * Send set transaction from connected account.
+           * Will use first connected address on 3rd party extensions
+           */
+          simpleStoreInstance.methods.set(input).send({ from: account[0] })
+            .then(function (transactionReceipt) {
+              el('#response').innerHTML = 'Value set. Your transaction hash is: ' + transactionReceipt.transactionHash;
+            }).catch(e => { el('#response').innerHTML = 'Transaction canceled.'; });
+
         });
-    });
+
+        // Add get button functionality
+        el('#getValue').addEventListener('click', function () {
+
+          // Make a call to the smart contract and receive the stored value
+          simpleStoreInstance.methods.get().call()
+            .then(function (valueStored) {
+              el('#response').innerHTML = 'The current value  stored in the smart contract is: ' + valueStored;
+            });
+        });
+      }
+    };
+
+    // Start the application
+    app();
   </script>
 </body>
 
