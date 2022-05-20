@@ -1,6 +1,6 @@
-## ethjs-examples
+## Example Dapps
 
-A set of example dApps and apps using `ethjs`.
+A set of example dApps and apps re-worked to work with web3.js, UP extension and MetaMask
 
 ## Install
 
