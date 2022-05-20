@@ -40,9 +40,6 @@
     href="https://github.com/lukso-network/example-dapps-ethjs/blob/master/accounts.html"
     target="_blank">lukso-network/example-dapps-ethjs/accounts.html</a>
 
-  <script type="text/javascript" src="ethereumjs-testrpc.js"></script>
-  <script type="text/javascript" src="ethjs.js"></script>
-
   <!-- Connect Extension & Check Network & Check Balance & Change Network-->
   <script src="./utils.js"></script>
 
@@ -51,37 +48,37 @@
 
   <!-- Main Function -->
   <script type="text/javascript">
-    var eth = new Eth(TestRPC.provider());
-    var el = function (id) { return document.querySelector(id); };
 
-    /*
-    // uncomment to enable MetaMask support:
-    if (typeof window.web3 !== 'undefined' && typeof window.web3.currentProvider !== 'undefined') {
-      eth.setProvider(window.web3.currentProvider);
-    } else {
-      eth.setProvider(provider); // set to TestRPC if not available
-    }
-    */
+    // Account Application
+    async function app() {
 
-    eth.accounts(function (accountsError, accounts) {
-      if (accountsError) {
-        el('#accounts').innerHTML = 'Hmm.. looks like there was an error: '
-          + String(accountsError);
+      /**
+       * Only start the application if an extension is installed and right network connected 
+       * Functions can be found in utils.js and return bool
+       */
+      if (await connectWeb3() && await checkNetwork()) {
+        const web3 = new Web3(window.ethereum);
+        let accounts = await ethereum.request({ method: "eth_accounts" });
+
+        // After receiving the account, clear the loading info
+        el('#accounts').innerHTML = '';
+
+        /**
+         * Show the address with balance within the table.
+         * Might return multiple accounts on 3rd party extensions
+         */
+        for (var i = 0; i < accounts.length; i++) {
+          el('#accounts').innerHTML += '<tr><td>'
+            + accounts[i] + '</td><td id="accountBalance_'
+            + accounts[i] + '"></td></tr>';
+          el('#accountBalance_' + accounts[i]).innerHTML += web3.utils.fromWei(await web3.eth.getBalance(accounts[i]), 'ether')
+            + ' LYXt';
+        }
       }
+    };
 
-      el('#accounts').innerHTML = '';
-
-      accounts.forEach(function (account) {
-        el('#accounts').innerHTML += '<tr><td>'
-          + account + '</td><td id="accountBalance_'
-          + account + '"></td></tr>';
-
-        eth.getBalance(account, function (balanceError, balance) {
-          el('#accountBalance_' + account).innerHTML += Eth.fromWei(balance, 'ether')
-            + ' ether';
-        });
-      });
-    });
+    // Start the application
+    app();
   </script>
 </body>
 
