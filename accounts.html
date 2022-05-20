@@ -1,52 +1,85 @@
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
-  </head>
-  <body class="container" style="padding-top: 3%;">
-    <h2><a href="index.html">ethjs</a></h2>
-    <h4>Your Accounts</h4>
 
-    <hr />
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
 
-    <table>
-      <thead> <tr> <th>Address</th> <th>Balance</th> </tr> </thead>
-      <tbody id="accounts"> <tr><td colspan="2">Loading your accounts...</td></tr> </tbody>
-    </table>
+<body class="container">
+  <p><a href="index.html">Back to Landing Page</a></p>
+  <h2>Account dApp</h2>
 
-    <script type="text/javascript" src="ethereumjs-testrpc.js"></script>
-    <script type="text/javascript" src="ethjs.js"></script>
-    <script type="text/javascript">
-      var eth = new Eth(TestRPC.provider());
-      var el = function(id){ return document.querySelector(id); };
+  <!-- Import Notifications -->
+  <div id="notifications"></div>
 
-      /*
-      // uncomment to enable MetaMask support:
-      if (typeof window.web3 !== 'undefined' && typeof window.web3.currentProvider !== 'undefined') {
-        eth.setProvider(window.web3.currentProvider);
-      } else {
-        eth.setProvider(provider); // set to TestRPC if not available
-      }
-      */
+  <hr>
 
-      eth.accounts(function(accountsError, accounts) {
-        if (accountsError) {
-          el('#accounts').innerHTML = 'Hmm.. looks like there was an error: '
-            + String(accountsError);
-        }
+  <!-- Webpage Frontend-->
+  <table>
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody id="accounts">
+      <tr>
+        <td colspan="2">Trying to load your accounts...</td>
+      </tr>
+    </tbody>
+  </table>
 
+  <hr>
+
+  <b class="repo">Repository File:</b><br><a
+    href="https://github.com/lukso-network/example-dapps/blob/master/accounts.html"
+    target="_blank">lukso-network/example-dapps/accounts.html</a>
+
+  <!-- Connect Extension & Check Network & Check Balance & Change Network-->
+  <script src="./utils.js"></script>
+
+  <!-- Query Selector & Login Event Function & Network Swap Function-->
+  <script src="./events.js"></script>
+
+  <!-- Main Function -->
+  <script type="text/javascript">
+
+    // Account Application
+    async function app() {
+
+      /**
+       * Only start the application if an extension is installed and right network connected 
+       * Functions can be found in utils.js and return bool
+       */
+      if (await connectWeb3() && await checkNetwork()) {
+        const web3 = new Web3(window.ethereum);
+        let accounts = await ethereum.request({ method: "eth_accounts" });
+
+        // After receiving the account, clear the loading info
         el('#accounts').innerHTML = '';
 
-        accounts.forEach(function(account){
+        /**
+         * Show the address with balance within the table.
+         * Might return multiple accounts on 3rd party extensions
+         */
+        for (var i = 0; i < accounts.length; i++) {
           el('#accounts').innerHTML += '<tr><td>'
-            + account + '</td><td id="accountBalance_'
-            + account + '"></td></tr>';
+            + accounts[i] + '</td><td id="accountBalance_'
+            + accounts[i] + '"></td></tr>';
+          el('#accountBalance_' + accounts[i]).innerHTML += web3.utils.fromWei(await web3.eth.getBalance(accounts[i]), 'ether')
+            + ' LYXt';
+        }
+      }
+    };
 
-          eth.getBalance(account, function(balanceError, balance){
-            el('#accountBalance_' + account).innerHTML += Eth.fromWei(balance, 'ether')
-              + ' ether';
-          });
-        });
-      });
-    </script>
-  </body>
+    // Start the application
+    app();
+  </script>
+</body>
+
 </html>

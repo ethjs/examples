@@ -1,0 +1,136 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+
+<body class="container">
+  <p><a href="index.html">Back to Landing Page</a></p>
+  <h2>Simple Storage dApp</h2>
+
+  <!-- Import Notifications -->
+  <div id="notifications"></div>
+
+  <hr>
+
+  <!-- Webpage Frontend-->
+  <div class="row">
+    <div class="column column-60">
+      <label>Set Value</label>
+      <input id="valueAmount" type="number" placeholder="i.e. 4500" required>
+      <div class="txnote">Anyone can set/get values to/from the blockchain.
+      </div>
+      <button id="setValue">Set Value</button>
+      <button id="getValue">Get Value</button>
+
+      <br>
+
+      <div id="response" class="response">
+        Empty response window</div>
+    </div>
+    <div class="column column-40">
+      <label>ABI</label>
+      <textarea id="abi" class="abi"></textarea>
+    </div>
+  </div>
+
+  <br>
+
+  <label>Solidity Code</label>
+
+  <pre><code>
+    pragma solidity >=0.7.0 <0.9.0;
+    
+      contract SimpleStore {
+
+        function set(uint _value) public {
+          value = _value;
+        }
+
+        function get() public view returns (uint) {
+          return value;
+        }
+
+        uint value;
+      }
+  </code></pre>
+
+  <hr>
+
+  <b>Repository File:</b><br><a href="https://github.com/lukso-network/example-dapps/blob/master/simple-storage.html"
+    target="_blank">lukso-network/example-dapps/simple-storage.html</a>
+
+  <!-- Connect Extension & Check Network & Check Balance & Change Network-->
+  <script src="./utils.js"></script>
+
+  <!-- Query Selector & Login Event Function & Network Swap Function-->
+  <script src="./events.js"></script>
+
+  <!-- Main Function -->
+  <script type="text/javascript">
+    // ABI of the deployed contract
+    const SimpleStoreABI = [{ "inputs": [], "name": "get", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_value", "type": "uint256" }], "name": "set", "outputs": [], "stateMutability": "nonpayable", "type": "function" }];
+
+    // Showing the ABI in the input field
+    el('#abi').value = JSON.stringify(SimpleStoreABI, null, 2);
+
+    // Simple Storage Application
+    async function app() {
+
+      /**
+       * Only start the application if: an extension is installed and right network connected 
+       * Functions can be found in utils.js and return bool
+       */
+      if (await connectWeb3() && await checkNetwork()) {
+
+        // Set up web3 library and get account
+        const web3 = new Web3(window.ethereum);
+        let account = await ethereum.request({ method: "eth_accounts" });
+
+        // Deployed smart contract on L14
+        let simpleStoreInstance = new web3.eth.Contract(SimpleStoreABI, '0xaA61d96cB849246Ebf3cf148e2f42F3FF216EA4D');
+
+        // Add set button functionality
+        el('#setValue').addEventListener('click', function () {
+          let input = el('#valueAmount').value;
+
+          // Check if user input is a valid
+
+          // Update response and error element
+          el('#response').innerHTML = "Trying to set value...";
+
+          /**
+           * Send set transaction from connected account.
+           * Will use first connected address on 3rd party extensions
+           */
+          simpleStoreInstance.methods.set(input).send({ from: account[0] })
+            .then(function (transactionReceipt) {
+              el('#response').innerHTML = 'Value set. Your transaction hash is: ' + transactionReceipt.transactionHash;
+            }).catch(e => { el('#response').innerHTML = 'Transaction canceled.'; });
+
+        });
+
+        // Add get button functionality
+        el('#getValue').addEventListener('click', function () {
+
+          // Make a call to the smart contract and receive the stored value
+          simpleStoreInstance.methods.get().call()
+            .then(function (valueStored) {
+              el('#response').innerHTML = 'The current value  stored in the smart contract is: ' + valueStored;
+            });
+        });
+      }
+    };
+
+    // Start the application
+    app();
+  </script>
+</body>
+
+</html>

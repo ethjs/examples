@@ -1,0 +1,59 @@
+.note,
+.warning {
+    display: none;
+    background-color: white;
+    border: solid 1px white;
+    border-radius: 6px;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+}
+
+.note::before,
+.warning::before {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.note {
+    background-color: #f0f7fb;
+    border-color: #3498db;
+}
+
+.note::before {
+    content: "📝";
+}
+
+.warning {
+    background-color: #fbf5f0;
+    border-color: #db6334;
+}
+
+.warning::before {
+    content: "⚠️";
+}
+
+.container {
+    padding-top: 3%;
+}
+
+.repo {
+    padding-bottom: 50px;
+}
+
+.txnote {
+    color: #9b4dca;
+    padding-bottom: 10px;
+}
+
+.response {
+    padding: 20px;
+    border: 1px solid #9b4dca;
+    word-wrap: break-word;
+    min-height: 94px;
+}
+
+.abi {
+    height: 256px;
+}
