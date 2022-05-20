@@ -5,6 +5,9 @@
   <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
 
 <body class="container">
@@ -39,6 +42,14 @@
 
   <script type="text/javascript" src="ethereumjs-testrpc.js"></script>
   <script type="text/javascript" src="ethjs.js"></script>
+
+  <!-- Connect Extension & Check Network & Check Balance & Change Network-->
+  <script src="./utils.js"></script>
+
+  <!-- Query Selector & Login Event Function & Network Swap Function-->
+  <script src="./events.js"></script>
+
+  <!-- Main Function -->
   <script type="text/javascript">
     var eth = new Eth(TestRPC.provider());
     var el = function (id) { return document.querySelector(id); };
