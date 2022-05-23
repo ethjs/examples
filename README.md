@@ -7,6 +7,11 @@ A set of example dApps and apps using `web3.js` to showcase the usage of Univers
 ```
 git clone https://github.com/lukso-network/example-dapps
 cd example-dapps
+```
+
+Search for 'local build' and follow the steps provided in the commentary of `accounts.html`, `index.html`, and `simple-storage.html` to fix broken links.
+
+```
 python3 -m http.server --cgi 8080
 ```
 
