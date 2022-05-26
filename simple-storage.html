@@ -133,8 +133,19 @@
       }
     };
 
-    // Start the application
-    app();
+    /** 
+     * Check if notifications were loaded to the page 
+     * before starting the app. If not, add a 100ms delay
+     * so jQuery can load them.
+     * 
+     * @dev: important on first load / no cache.
+     */
+    if (el("#notifications").childElementCount === 0) {
+      setTimeout(function () { app() }, 100);
+    }
+    else {
+      app()
+    }
   </script>
 </body>
 
