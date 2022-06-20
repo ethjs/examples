@@ -98,8 +98,8 @@
         const web3 = new Web3(window.ethereum);
         let account = await ethereum.request({ method: "eth_accounts" });
 
-        // Deployed smart contract on L14
-        let simpleStoreInstance = new web3.eth.Contract(SimpleStoreABI, '0xaA61d96cB849246Ebf3cf148e2f42F3FF216EA4D');
+        // Deployed smart contract on L16
+        let simpleStoreInstance = new web3.eth.Contract(SimpleStoreABI, '0x4041F84910CbF99BfF7f1c5F4b4Ce07eF50A10a7');
 
         // Add set button functionality
         el('#setValue').addEventListener('click', function () {
