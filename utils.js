@@ -49,7 +49,12 @@ async function checkMinimalBalance() {
     web3.utils.fromWei(await web3.eth.getBalance(accounts[0]), "ether") < 0.25
   ) {
     // Show low balance browser notification
-    el("#lowBalance").style.display = "block";
+    let chainID = await web3.eth.getChainId();
+    if (chainID === 22) {
+      el("#lowBalanceL14").style.display = "block";
+    } else if (chainID === 2828) {
+      el("#lowBalanceL16").style.display = "block";
+    }
   }
 }
 
@@ -73,7 +78,7 @@ async function checkNetwork() {
       const networkID = await web3.eth.net.getId();
 
       // Check if its connected to the wrong network
-      if (networkID !== 22) {
+      if (networkID !== 22 || networkID !== 2828) {
         // Show wrong network notification
         el("#network").style.display = "block";
         return false;
@@ -98,7 +103,7 @@ async function checkNetwork() {
   }
 }
 
-async function addLuksoTestnet() {
+async function addLuksoL14Testnet() {
   try {
     // Open request to add custom network
     await window.ethereum.request({
@@ -114,6 +119,30 @@ async function addLuksoTestnet() {
           },
           rpcUrls: ["https://rpc.l16.lukso.network"],
           blockExplorerUrls: ["https://explorer.execution.l16.lukso.network"],
+        },
+      ],
+    });
+  } catch (err) {
+    // User denied access
+  }
+}
+
+async function addLuksoL14Testnet() {
+  try {
+    // Open request to add custom network
+    await window.ethereum.request({
+      method: "wallet_addEthereumChain",
+      params: [
+        {
+          chainId: "0x16",
+          chainName: "LUKSO L14",
+          nativeCurrency: {
+            name: "LUKSO",
+            symbol: "LYXt",
+            decimals: 18,
+          },
+          rpcUrls: ["https://rpc.l14.lukso.network"],
+          blockExplorerUrls: ["https://blockscout.com/lukso/l14"],
         },
       ],
     });

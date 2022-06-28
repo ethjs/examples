@@ -99,7 +99,18 @@
         let account = await ethereum.request({ method: "eth_accounts" });
 
         // Deployed smart contract on L16
-        let simpleStoreInstance = new web3.eth.Contract(SimpleStoreABI, '0x4041F84910CbF99BfF7f1c5F4b4Ce07eF50A10a7');
+        const chainID = await web3.eth.getChainId();
+        const isL16 = false;
+        let simpleStoreInstance = null;
+
+        // is L14
+        if(chainID === 22){
+          simpleStoreInstance = new web3.eth.Contract(SimpleStoreABI, '0xaA61d96cB849246Ebf3cf148e2f42F3FF216EA4D');
+        }
+        // is L16
+        else if (chainID === 2828){
+          simpleStoreInstance = new web3.eth.Contract(SimpleStoreABI, '0x4041F84910CbF99BfF7f1c5F4b4Ce07eF50A10a7');
+        }
 
         // Add set button functionality
         el('#setValue').addEventListener('click', function () {

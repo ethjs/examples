@@ -32,7 +32,7 @@ Open any of the `.html` files in `Chrome` or `Firefox`. Everything runs out of t
 
 This is a small set of dApps using `web3.js`.
 
-All listed examples on the hosted [landingpage](http://example-dapps.lukso.tech/accounts-dapp) also feature other repositories that connect to the LUKSO L16 testnetwork. This is meant to get you up and running with the [Universal Profile Extension](https://docs.lukso.tech/guides/universal-profile/browser-extension/install-browser-extension) but also works using the [MetaMask](https://metamask.io/) by having less convenience.
+All listed examples on the hosted [landingpage](http://example-dapps.lukso.tech/accounts-dapp) also feature other repositories that connect to the LUKSO L14 or L16 testnetworks. This is meant to get you up and running with the [Universal Profile Extension](https://docs.lukso.tech/guides/universal-profile/browser-extension/install-browser-extension) but also works using the [MetaMask](https://metamask.io/) by having less convenience.
 
 ## Libraries
 
