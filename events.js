@@ -21,12 +21,12 @@ $("#notifications").load("notifications.html", function () {
 
     // Enable network swap
     el("#swapnetworkL14").addEventListener("click", async function () {
-      await addLuksoTestnet();
+      await addLuksoL14Testnet();
       el("#network").style.display = "none";
     });
 
     el("#swapnetworkL16").addEventListener("click", async function () {
-      await addLuksoTestnet();
+      await addLuksoL16Testnet();
       el("#network").style.display = "none";
     });
   }

@@ -103,14 +103,14 @@ async function checkNetwork() {
   }
 }
 
-async function addLuksoL14Testnet() {
+async function addLuksoL16Testnet() {
   try {
     // Open request to add custom network
     await window.ethereum.request({
       method: "wallet_addEthereumChain",
       params: [
         {
-          chainId: "0x0B0C",
+          chainId: "0xB0C",
           chainName: "LUKSO L16",
           nativeCurrency: {
             name: "LUKSO",
