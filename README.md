@@ -1,42 +1,25 @@
 ## dApp Examples
 
-A set of example dApps and apps using `web3.js` to showcase the usage of Universal Profiles.
+A set of example dApps and apps using `web3.js` to showcase the usage of Universal Profiles. This repository is meant to get you up and running with the [Universal Profile Extension](https://docs.lukso.tech/guides/universal-profile/browser-extension/install-browser-extension) but also works using [MetaMask](https://metamask.io/) and having less convenience.
 
-## Install and run locally
+All listed examples are live on [examples.lukso.tech](https://examples.lukso.tech/), which features further examples that connect to the LUKSO L14 or L16 testnetworks.
 
-```
-git clone https://github.com/lukso-network/example-dapps
-cd example-dapps
-```
+## Features
+
+- [Account dApp](http://example-dapps.lukso.tech/accounts-dapp) -- See your Ethereum accounts and balances in [accounts](./accounts.html)
+- [Simple Storage dApp](http://example-dapps.lukso.tech/simple-storage-dapp) -- Set and Get from a SimpleStore contract in [simple-storage](./simple-storage.html)
+
+## Deployment and Hosting
+
+All example dApps on LUKSO are deployed using a custom CI/CD script to host several repositories to one domain with several subfolders. Please deploy merged changes with the GitHub Workflow in the [example-hosting](https://github.com/lukso-network/example-hosting) repository.
+
+## Local Development
 
 Search for 'local build' and follow the steps provided in the commentary of `accounts.html`, `index.html`, and `simple-storage.html` to fix broken links.
 
 ```
 python3 -m http.server --cgi 8080
 ```
-
-## Hosted
-
-[LUKSO Sample dApps](http://example-dapps.lukso.tech/)
-
-## Usage
-
-Open any of the `.html` files in `Chrome` or `Firefox`. Everything runs out of the box.
-
-## Available Examples
-
-- [Account dApp](http://example-dapps.lukso.tech/accounts-dapp) - [code](./accounts.html) -- See your Ethereum accounts and balances
-- [Simple Storage dApp](http://example-dapps.lukso.tech/simple-storage-dapp) - [code](./simple-storage.html) -- Set and Get from a SimpleStore contract
-
-## About
-
-This is a small set of dApps using `web3.js`.
-
-All listed examples on the hosted [landingpage](http://example-dapps.lukso.tech/accounts-dapp) also feature other repositories that connect to the LUKSO L14 or L16 testnetworks. This is meant to get you up and running with the [Universal Profile Extension](https://docs.lukso.tech/guides/universal-profile/browser-extension/install-browser-extension) but also works using the [MetaMask](https://metamask.io/) by having less convenience.
-
-## Libraries
-
-- [web3.js](https://web3js.readthedocs.io/en/v1.7.3/)
 
 ## Licence
 
@@ -63,3 +46,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
+
+## Libraries
+
+- [web3.js](https://web3js.readthedocs.io/en/v1.7.3/)
